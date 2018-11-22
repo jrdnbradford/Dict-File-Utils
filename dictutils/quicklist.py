@@ -7,7 +7,7 @@ dictionary-like text file.
 from string import printable
 
 #Maps printable characters to list indices
-alphadict = {letter: i for i, letter in enumerate(printable)}
+char_dict = {letter: i for i, letter in enumerate(printable)}
 
 def get_quicklist(textfile):
     """
@@ -40,15 +40,15 @@ def get_index(word):
     word (string): A word.
     """
     if _checkword(word, 3):
-        idx1 = alphadict.get(word[0])
-        idx2 = alphadict.get(word[1])
-        idx3 = alphadict.get(word[2])
+        idx1 = char_dict.get(word[0])
+        idx2 = char_dict.get(word[1])
+        idx3 = char_dict.get(word[2])
     elif _checkword(word, 2):
-        idx1 = alphadict.get(word[0])
-        idx2 = alphadict.get(word[1])
+        idx1 = char_dict.get(word[0])
+        idx2 = char_dict.get(word[1])
         idx3 = idx2
     elif _checkword(word, 1):
-        idx1 = alphadict.get(word[0])
+        idx1 = char_dict.get(word[0])
         idx2 = idx3 = idx1
     else: #Satisfied if word begins with character(s) not in string.printable
         idx1 = idx2 = idx3 = 0
