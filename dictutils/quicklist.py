@@ -1,7 +1,6 @@
 """
-Module that supports high performance
-iterations against words in a 
-dictionary-like text file.
+Module that supports high performance iterations 
+against words in a dictionary-like text file.
 """
 
 from string import printable
@@ -11,14 +10,11 @@ char_dict = {letter: i for i, letter in enumerate(printable)}
 
 def get_quicklist(textfile):
     """
-    Appends words from a dictionary file to 
-    a returned list using a list of indices 
-    returned by get_index(). 
+    Appends words from a dictionary file to a returned 
+    list using a list of indices returned by get_index(). 
     
-    Results in much faster iterative searches 
-    for words in a dictionary as the word can be 
-    searched for in a much smaller subsection of
-    the dictionary.
+    Results in much faster iterative searches for words as the word 
+    can be searched for in a much smaller subsection of the dictionary.
 
     textfile (string): Path to text file.
     """
@@ -29,7 +25,11 @@ def get_quicklist(textfile):
         for word in f.readlines():
             word = word.strip()
             idx = get_index(word)
-            quicklist[idx[0]][idx[1]][idx[2]].append(word)
+            try:
+                quicklist[idx[0]][idx[1]][idx[2]].append(word)
+            except TypeError:
+                #print("Dictionary get() method returned None.")
+                quicklist[0][0][0].append(word)
     return quicklist
 
 
@@ -39,29 +39,21 @@ def get_index(word):
 
     word (string): A word.
     """
-    if _checkword(word, 3):
+    try:
         idx1 = char_dict.get(word[0])
         idx2 = char_dict.get(word[1])
         idx3 = char_dict.get(word[2])
-    elif _checkword(word, 2):
-        idx1 = char_dict.get(word[0])
-        idx2 = char_dict.get(word[1])
-        idx3 = idx2
-    elif _checkword(word, 1):
-        idx1 = char_dict.get(word[0])
-        idx2 = idx3 = idx1
-    else: #Satisfied if word begins with character(s) not in string.printable
-        idx1 = idx2 = idx3 = 0
+    except IndexError:
+        #print("Passed word is smaller than three characters.")
+        try:
+            idx2 = char_dict.get(word[1])
+            idx3 = idx2
+        except IndexError: 
+            #print("Passed word is smaller than two characters.")
+            try:
+                idx3 = idx2 = idx1
+            except Exception as err:
+                print(err)  
 
     idx = [idx1, idx2, idx3]
     return idx
-
-
-def _checkword(word, length):
-    chars = word[:3]
-    if len(chars) != length:
-        return False
-    for char in chars:
-        if char not in printable:
-            return False
-    return True
