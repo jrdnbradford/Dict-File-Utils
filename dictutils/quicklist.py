@@ -25,11 +25,7 @@ def get_quicklist(textfile):
         for word in f.readlines():
             word = word.strip()
             idx = get_index(word)
-            try:
-                quicklist[idx[0]][idx[1]][idx[2]].append(word)
-            except TypeError:
-                #print("Dictionary get() method returned None.")
-                quicklist[0][0][0].append(word)
+            quicklist[idx[0]][idx[1]][idx[2]].append(word)
     return quicklist
 
 
@@ -40,20 +36,23 @@ def get_index(word):
     word (string): A word.
     """
     try:
-        idx1 = char_dict.get(word[0])
-        idx2 = char_dict.get(word[1])
-        idx3 = char_dict.get(word[2])
+        idx1 = char_dict[word[0]]
+        idx2 = char_dict[word[1]]
+        idx3 = char_dict[word[2]]
     except IndexError:
-        #print("Passed word is smaller than three characters.")
+        #print(f"Passed word {word} is {len(word)} character(s).")
         try:
-            idx2 = char_dict.get(word[1])
+            idx2 = char_dict[word[1]]
             idx3 = idx2
         except IndexError: 
-            #print("Passed word is smaller than two characters.")
+            #print(f"Passed word {word} is 1 character.")
             try:
                 idx3 = idx2 = idx1
             except Exception as err:
-                print(err)  
+                print(err) 
+    except KeyError:
+        #print(f"Unprintable character(s) in word: {word}.")
+        idx3 = idx2 = idx1 = 0
 
     idx = [idx1, idx2, idx3]
     return idx
