@@ -1,5 +1,5 @@
 # Dict-File-Utils
-***Repo in progress*** that provides functions for manipulating and editing dictionary-like text files.
+Repo that provides functions for manipulating and editing dictionary-like text files.
 
 ## Contributing
 Issues that request new features/changes are welcomed. Do not initiate pull requests. 
