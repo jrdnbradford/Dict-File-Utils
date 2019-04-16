@@ -2,7 +2,7 @@ def removedupes(textfile):
     """
     If there are duplicates in given text file, 
     remove them and write the result unordered 
-    to new file, returing path to newly created 
+    to new file, returning path to newly created 
     file as string. If there are no duplicates,
     return None without writing a new file.
 
